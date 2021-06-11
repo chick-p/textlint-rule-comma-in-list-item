@@ -1,0 +1,33 @@
+{
+  "name": "textlint-rule-comma-in-list-item",
+  "description": "",
+  "version": "0.1.0",
+  "private": true,
+  "main": "index.js",
+  "author": "chick-p <chick.p.1120@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "textlint-scripts build",
+    "prepublish": "npm run --if-present build",
+    "test": "textlint-scripts test",
+    "watch": "textlint-scripts build --watch"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "files": [
+    "lib/",
+    "src/"
+  ],
+  "keywords": [
+    "textlintrule"
+  ],
+  "devDependencies": {
+    "@textlint/types": "^12.0.0",
+    "@types/node": "^15.6.0",
+    "textlint-scripts": "^12.0.1",
+    "textlint-tester": "^12.0.0",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.2.4"
+  }
+}
