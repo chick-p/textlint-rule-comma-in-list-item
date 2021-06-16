@@ -5,51 +5,77 @@
 import rule from "../src/index";
 import TextLintTester from "textlint-tester";
 const tester = new TextLintTester();
-// ruleName, rule, { valid, invalid }
 tester.run("rule", rule, {
   valid: [
-    // no match
-    "text",
-    // partial match
-    "OK.",
+    "- foo",
+    "- foo\n- bar",
+    "- foo\n- bar\n  - baz",
+    {
+      text: "- foo,bar",
+      options: {
+        commmaMarks: ["、"],
+      },
+    },
+    {
+      text: "1. foo,bar",
+      options: {
+        allowOrderedList: true,
+      },
+    },
   ],
   invalid: [
-    // inline file
     {
-      text: "jquery",
+      text: "- foo,bar",
       errors: [
         {
-          message: "Found jQuery!",
-          index: 0,
+          message: "Include comma.",
+          line: 1,
+          column: 4,
         },
       ],
     },
-    // single match
     {
-      text: "It is bugs.",
+      text: "- foo\n- foo,bar",
       errors: [
         {
-          message: "Found bugs.",
+          message: "Include comma.",
+          line: 2,
+          column: 4,
+        },
+      ],
+    },
+    {
+      text: "- foo<br>foo,bar",
+      errors: [
+        {
+          message: "Include comma.",
+          line: 1,
+          column: 11,
+        },
+      ],
+    },
+    {
+      text: "- foo、ba,r",
+      errors: [
+        {
+          message: "Include comma.",
+          line: 1,
+          column: 4,
+        },
+        {
+          message: "Include comma.",
           line: 1,
           column: 7,
         },
       ],
     },
-    // multiple match
     {
-      text: `It has many bugs.
-
-One more bugs`,
+      text: "1. foo,bar",
       errors: [
         {
-          message: "Found bugs.",
+          message: "Include comma.",
           line: 1,
-          column: 13,
-        },
-        {
-          message: "Found bugs.",
-          line: 3,
-          column: 10,
+          column: 4,
         },
       ],
     },
